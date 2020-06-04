@@ -1,3 +1,4 @@
+require('dotenv').config()
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('superagent')
@@ -5,9 +6,9 @@ var app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-var mailchimpInstance = 'us10'
-var listUniqueId = 'dd6fe0783f'
-var mailchimpApiKey = '22b70c35c161c5b27f5d6db2d1869aa0-us10'
+const mailchimpInstance = process.env.MAILCHIMP_INSTANCE
+var listUniqueId = process.env.LIST_UNIQUE_ID
+var mailchimpApiKey = process.env.MAILCHIMP_API_KEY
 
 app.get("/", (req, res) => {
   console.log("Hello World");
@@ -39,7 +40,7 @@ app.get('/members', (req, res) => {
         let location = member.merge_fields.MMERGE3
         let website = member.merge_fields.MMERGE4
 
-        console.log({ 'Name': name, 'Category': category, 'Location': location, 'Website': website });
+        console.log({ 'ID:': id, 'Email:': email, 'Name': name, 'Category': category, 'Location': location, 'Website': website });
       })
     })
     .catch(err => {
